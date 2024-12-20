@@ -27,21 +27,39 @@ public class Runigram {
 	/** Returns a 2D array of Color values, representing the image data
 	 * stored in the given PPM file. */
 	public static Color[][] read(String fileName) {
-		In in = new In(fileName);
-		// Reads the file header, ignoring the first and the third lines.
-		in.readString();
-		int numCols = in.readInt();
-		int numRows = in.readInt();
-		in.readInt();
-		// Creates the image array
-		Color[][] image = new Color[numRows][numCols];
-		// Reads the RGB values from the file into the image array. 
-		// For each pixel (i,j), reads 3 values from the file,
-		// creates from the 3 colors a new Color object, and 
-		// makes pixel (i,j) refer to that object.
-		//// Replace the following statement with your code.
-		return null;
-	}
+	    In in = new In(fileName);
+
+	    String format = in.readString();
+	    if (!format.equals("P3")) {
+	        System.out.println("Unsupported PPM format: " + format);
+	        return null;
+	    }
+
+	    int numCols = in.readInt();
+	    int numRows = in.readInt();
+	    int maxColorValue = in.readInt();
+	    if (maxColorValue != 255) {
+	        System.out.println("Unsupported max color value: " + maxColorValue);
+	        return null;
+	    }
+
+    // Initializes the 2D array to store Color values
+    Color[][] image = new Color[numRows][numCols];
+
+    // Reads the RGB values for each pixel and populates the array
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j < numCols; j++) {
+            int r = in.readInt(); // Reads red component
+            int g = in.readInt(); // Reads green component
+            int b = in.readInt(); // Reads blue component
+            image[i][j] = new Color(r, g, b); // Creates Color object and assigns it to the array
+        }
+    }
+
+    // Returns the populated image array
+    return image;
+}
+
 
     // Prints the RGB values of a given color.
 	private static void print(Color c) {
@@ -72,7 +90,7 @@ public class Runigram {
 	/**
 	 * Returns an image which is the horizontally flipped version of the given image. 
 	 */
-	public static Color[][] flippedHorizontally(Color[][] image) {
+	private static Color[][] flippedHorizontally(Color[][] image) {
 	    int rows = image.length;
 	    int cols = image[0].length;
 	    Color[][] flippedImage = new Color[rows][cols];
