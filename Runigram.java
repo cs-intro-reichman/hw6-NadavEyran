@@ -75,7 +75,7 @@ public class Runigram {
 	// This function is used for debugging purposes.
 	// For example, to check that some image processing function works correctly,
 	// we can apply the function and then use this function to print the resulting image.
-	private static void print(Color[][] image) {
+	public static void print(Color[][] image) {
 		//// Replace this comment with your code
 		//// Notice that all you have to so is print every element (i,j) of the array using the print(Color) function.
 		for (int i = 0 ; i < image.length ; i++ ) {
@@ -90,7 +90,7 @@ public class Runigram {
 	/**
 	 * Returns an image which is the horizontally flipped version of the given image. 
 	 */
-	private static Color[][] flippedHorizontally(Color[][] image) {
+	public static Color[][] flippedHorizontally(Color[][] image) {
 	    int rows = image.length;
 	    int cols = image[0].length;
 	    Color[][] flippedImage = new Color[rows][cols];
@@ -125,7 +125,7 @@ public class Runigram {
 	// Computes the luminance of the RGB values of the given pixel, using the formula 
 	// lum = 0.299 * r + 0.587 * g + 0.114 * b, and returns a Color object consisting
 	// the three values r = lum, g = lum, b = lum.
-	private static Color luminance(Color pixel) {
+	public static Color luminance(Color pixel) {
 	    int r = pixel.getRed();
 	    int g = pixel.getGreen();
 	    int b = pixel.getBlue();
