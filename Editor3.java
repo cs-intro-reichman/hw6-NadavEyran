@@ -12,13 +12,37 @@ import java.awt.Color;
  */
 public class Editor3 {
 
-	public static void main (String[] args) {
-		String source = args[0];
-		String target = args[1];
-		int n = Integer.parseInt(args[2]);
-		Color[][] sourceImage = Runigram.read(source);
-		Color[][] targetImage = Runigram.read(target);
-		Runigram.setCanvas(sourceImage);
-		Runigram.morph(sourceImage, targetImage, n);
-	}
+    public static void main(String[] args) {
+        if (args.length != 3) {
+            System.out.println("Usage: java Editor3 <sourceFile> <targetFile> <steps>");
+            return;
+        }
+
+        String sourceFile = args[0];
+        String targetFile = args[1];
+        int steps;
+
+        try {
+            steps = Integer.parseInt(args[2]);
+        } catch (NumberFormatException e) {
+            System.out.println("The number of steps must be an integer.");
+            return;
+        }
+
+        Color[][] sourceImage = Runigram.read(sourceFile);
+        if (sourceImage == null) {
+            System.out.println("Failed to load source image: " + sourceFile);
+            return;
+        }
+
+        Color[][] targetImage = Runigram.read(targetFile);
+        if (targetImage == null) {
+            System.out.println("Failed to load target image: " + targetFile);
+            return;
+        }
+
+        System.out.println("Morphing from " + sourceFile + " to " + targetFile + " in " + steps + " steps...");
+        Runigram.setCanvas(sourceImage);
+        Runigram.morph(sourceImage, targetImage, steps);
+    }
 }
